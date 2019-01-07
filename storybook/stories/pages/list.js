@@ -7,8 +7,19 @@ export default class List extends Component {
     return (
       <View style={styles.container}>
         <Header title = 'BILL MANAGER' page = 'list'/>
-
+        <View style={{flexDirection:'column'}}>
+        <View style={{flexDirection:'row'}}>
         <Card/>
+        <Card/>
+        <Card/>
+        <Card/>
+        <Card/>
+
+        </View>
+        
+        
+        
+        </View>
         
         
         
@@ -19,8 +30,8 @@ export default class List extends Component {
 }
 const Card = ()=>{
     return(
-        <View style ={{flex:3}}>
-            <View style ={{backgroundColor:'blue'}}>
+        <View style ={{}}>
+            <View style ={{backgroundColor:'blue',width:150,height:190,marginTop:20,marginLeft:20,padding:20}}>
             <Text>hello</Text>
             </View>
             
@@ -30,9 +41,10 @@ const Card = ()=>{
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  
+    
+    flexWrap: 'wrap',
     marginTop: 20,
-    backgroundColor: 'white',
+    backgroundColor: 'red',
     width:360,   
   }
 });

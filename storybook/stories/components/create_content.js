@@ -10,11 +10,14 @@ export default class Content extends Component {
         this.state={
             site:'',
             device:'',
-            month:'',
+            month:'Aug',
             count:1,
-            counter:[
+            List:[
                 {
-                    id:0
+                    id:0,
+                    month:'Jan',
+                    rate:'',
+                    budget:''
                 },
             
         ]
@@ -23,21 +26,21 @@ export default class Content extends Component {
         }
     }
     
-    addCounter = ()=>{
-        let tempArr = this.state.counter;
+    addListItem = ()=>{
+        let tempArr = this.state.List;
 
-        tempArr.push({id:this.state.count++});
+        tempArr.push({id:this.state.count++,month:'',rate:'',budget:''});
         
         
         this.setState({
-         counter: tempArr,
+         List: tempArr,
          count:this.state.count++
 
         })
     }
     deleteRow = (id)=>{
         console.log('id',id);
-        let tempArr = this.state.counter.filter((item)=>{
+        let tempArr = this.state.List.filter((item)=>{
             
             if(item.id !== id) return item;
         });
@@ -45,13 +48,13 @@ export default class Content extends Component {
    
         // // <View>{index}</View>
         // // temp.splice(index,1);
-        // // this.state.counter.length > 1 ?
+        // // this.state.List.length > 1 ?
         //  this.setState({
-        //      counter:list         });
-    // let list = this.state.counter.slice();
+        //      List:list         });
+    // let list = this.state.List.slice();
     // list.splice(id,1);
     this.setState({
-        counter:tempArr
+        List:tempArr
     })
 
 
@@ -63,9 +66,47 @@ export default class Content extends Component {
      updateDevice = (device) => {
         this.setState({ device: device })
      }
-     updateMonth = (month) => {
-        this.setState({ month: month })
-     }
+    //  updateMonth = (month) => {
+    //   console.log('update month function unit',month)
+    //     this.setState({ month: month })
+    //  }
+     updateUnitRate = (id,text) => {
+
+      console.log('event',text)
+       
+       
+       let tempArr = this.state.List;
+       tempArr.map((item)=>(
+        
+         item.id === id ? item.rate = text :null
+       ));
+      this.setState({ List: tempArr })
+   }
+   updateBudget = (id,text) => {
+
+    console.log('event',text)
+     
+     
+     let tempArr = this.state.List;
+     tempArr.map((item)=>(
+      
+       item.id === id ? item.budget = text :null
+     ));
+    this.setState({ List: tempArr })
+ }
+ updateMonth = (id,month) => {
+
+  console.log('month' ,month,'id',id)
+  
+   
+   let tempArr = this.state.List;
+   tempArr.map((item)=>(
+    
+     item.id === id ? item.month = month :null
+   ));
+  this.setState({ List: tempArr })
+}
+  
   render() {
     return (
       <View style={{
@@ -99,8 +140,8 @@ export default class Content extends Component {
         
         
         
-        <Icon size={30} name="building" backgroundColor="#4286f4" style ={styles.icon}/>
-        <Picker selectedValue =  {this.state.site} style ={{width: 260,marginLeft:10}} onValueChange = {this.updateSite}>
+        <Icon size={30} name="question" backgroundColor="#4286f4" style ={styles.icon}/>
+        <Picker selectedValue =  {this.state.site} style ={{width: 260,marginLeft:20}} onValueChange = {this.updateSite}>
                 <Picker.Item label = "My Home" value = "My Home" />
                <Picker.Item label = "Website" value = "Website" />
                <Picker.Item label = "BlueEast" value = "BlueEast" />
@@ -114,8 +155,8 @@ export default class Content extends Component {
         
         
         
-        <Icon size={30} name="building" backgroundColor="#4286f4" style ={styles.icon}/>
-        <Picker selectedValue =  {this.state.device} style ={{width: 260,marginLeft:10}} onValueChange = {this.updateDevice}>
+        <Icon size={30} name="wifi" backgroundColor="#4286f4" style ={styles.icon}/>
+        <Picker selectedValue =  {this.state.device} style ={{width: 260,marginLeft:5}} onValueChange = {this.updateDevice}>
                
                <Picker.Item label = "Bedroom AC" value = "Bedroom AC" />
                <Picker.Item label = "Office AC" value = "Office AC" />
@@ -126,7 +167,7 @@ export default class Content extends Component {
         </View>
 
 
-        <View style={{flexDirection:'row', justifyContent:'space-evenly', marginTop:20}}>
+        <View style={{flexDirection:'row', justifyContent:'space-evenly', marginTop:5}}>
 
             <Text style={{color:'#4286f4'}}>Select Month</Text>
             <Text style={{color:'#4286f4'}}>Unit Rate</Text>
@@ -134,9 +175,23 @@ export default class Content extends Component {
 
         </View>
         
-            {this.state.counter.map((item,index)=>(
-                
-            <PickerRow key={index} month = {this.state.month} updateMonth = {this.updateMonth} deleteRow={()=> this.deleteRow(item.id)} index = {index}/>
+            {this.state.List.map((item,index)=>(
+                 
+            <PickerRow key={index}
+             
+              month = {this.state.month}
+              deleteRow={()=> this.deleteRow(item.id)}
+               updateUnitRate = {(text)=>this.updateUnitRate(item.id,text)}
+               unitRateValue = {this.state.List[index].rate}
+               updateBudget = {(text)=>this.updateBudget(item.id,text)}
+               budgetValue = {this.state.List[index].budget}
+
+               updateMonth = {(itemValue)=>this.updateMonth(item.id,itemValue)}
+               monthValue = {this.state.List[index].month}
+               
+               
+               />
+            
             ))
          
             }
@@ -144,7 +199,17 @@ export default class Content extends Component {
 
 
        
-       <View style={{flexDirection:'row'}}><Button onPress={this.addCounter} title = "Add more"/></View>
+       <View style={{flexDirection:'row'}}><Button onPress={this.addListItem} title = "Add more"/></View>
+       <View
+          style={{
+            marginTop:50,
+            borderBottomColor: 'black',
+            borderBottomWidth: 1,
+          }}
+        />
+
+       
+       <View style={{flexDirection:'row',justifyContent:'flex-end',marginTop:30,marginBottom:30}}><Button title = "Next"/></View>
        
 
 
@@ -159,7 +224,7 @@ const PickerRow = (props) =>{
     return(
         <View style={{flexDirection:'row', justifyContent:'space-evenly', marginTop:20}}>
 
-       <Picker selectedValue =  {props.month} style ={{width: 70,marginLeft:10}} onValueChange={props.updateMonth}>
+       <Picker selectedValue={props.monthValue} style ={{width: 70,marginLeft:10}} onValueChange={(itemValue)=>props.updateMonth(itemValue)}>
                
                <Picker.Item label = "Jan" value = "Jan" />
                <Picker.Item label = "Feb" value = "Feb" />
@@ -178,6 +243,10 @@ const PickerRow = (props) =>{
           style={{height: 40,marginLeft:20,borderBottomWidth: 1,
             borderBottomColor: 'gray',}}
           placeholder="pick"
+          keyboardType='numeric'
+          onChangeText={(text)=>props.updateUnitRate(text)}
+          value = {props.unitRateValue}
+ 
           
           
           
@@ -186,7 +255,10 @@ const PickerRow = (props) =>{
           style={{height: 40,marginLeft:20,borderBottomWidth: 1,
             borderBottomColor: 'gray',}}
           placeholder="pick"
-          value = "hello"
+          keyboardType='numeric'
+          onChangeText={(text)=>props.updateBudget(text)}
+          value = {props.budgetValue}
+          
           
           
         />
