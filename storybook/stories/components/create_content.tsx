@@ -2,8 +2,24 @@ import React, { Component } from 'react';
 import { View,StyleSheet, Text,Image,TextInput,Picker,Button,ScrollView } from 'react-native';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
+interface State {
+  site:string,
+  device:string,
+  month:string,
+  count:number,
+  List:array
+}
+export interface PickerProps {
+  deleteRow:VoidFunction,
+  updateUnitRate:VoidFunction,
+  unitRateValue:string,
+  updateBudget:VoidFunction,
+  budgetValue:string,
+  updateMonth:VoidFunction
+  monthValue:string
+}
 
-export default class Content extends Component {
+export default class Create_Content extends Component<{},State> {
     constructor(props){
         super(props);
          this.array=[];
@@ -179,7 +195,7 @@ export default class Content extends Component {
                  
             <PickerRow key={index}
              
-              month = {this.state.month}
+              
               deleteRow={()=> this.deleteRow(item.id)}
                updateUnitRate = {(text)=>this.updateUnitRate(item.id,text)}
                unitRateValue = {this.state.List[index].rate}
@@ -220,7 +236,7 @@ export default class Content extends Component {
     );
   }
 }
-const PickerRow = (props) =>{
+const PickerRow = (props:PickerProps) =>{
     return(
         <View style={{flexDirection:'row', justifyContent:'space-evenly', marginTop:20}}>
 

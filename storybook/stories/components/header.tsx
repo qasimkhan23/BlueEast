@@ -2,8 +2,19 @@ import React, { Component } from 'react';
 import { View,StyleSheet, Text,Button,Image,ToolbarAndroid } from 'react-native';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
-export default class Header extends Component {
-    constructor(props){
+
+export interface HeaderProps {
+  title: string,
+  page:string
+  
+}
+
+
+
+
+
+export default class Header extends Component<HeaderProps, {}> {
+    constructor(props:HeaderProps){
         super(props);
     }
    

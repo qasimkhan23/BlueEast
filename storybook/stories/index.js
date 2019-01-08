@@ -7,9 +7,9 @@ import { linkTo } from '@storybook/addon-links';
 
 
 
-import Home from './pages/home';
-import Create from './pages/create';
-import List from './pages/list';
+import {Home} from './pages/home';
+import {Create} from './pages/create';
+import {List} from './pages/list';
 
 storiesOf('Biull Manager', module)
  

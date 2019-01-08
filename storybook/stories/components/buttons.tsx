@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View,StyleSheet, Text,Image,Button } from 'react-native';
-export default class Buttons extends Component {
-  render() {
+export const Buttons = () => {
+  
     return (
       <View style={{
         flexDirection: 'row',
@@ -18,7 +18,7 @@ export default class Buttons extends Component {
       </View>
      
     );
-  }
+  
 }
 const styles = StyleSheet.create({
   container: {

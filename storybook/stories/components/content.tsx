@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View,StyleSheet, Text,Image } from 'react-native';
-export default class Content extends Component {
-  render() {
+export const Content = ()=> {
+  
     return (
       <View style={styles.welcome}>
         
@@ -13,7 +13,7 @@ export default class Content extends Component {
       </View>
      
     );
-  }
+  
 }
 const styles = StyleSheet.create({
   container: {

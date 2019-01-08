@@ -1,25 +1,31 @@
 import React, { Component } from 'react';
-import { View,StyleSheet, Text } from 'react-native';
+import { View,StyleSheet, Text,ScrollView } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Header from '../components/header';
-import Create_Content from '../components/create_content';
-export default class Create extends Component {
-  render() {
+import {List_Content} from '../components/list_content';
+export const List = () => {
+  
     return (
       <View style={styles.container}>
-        <Header title = 'CREATE BILL (step 1)' page = 'create'/>
-        <Create_Content/>
+        <Header title = 'BILL MANAGER' page = 'list'/>
+        
+        
+        <List_Content/>
+        
+        
         
         
       </View>
      
     );
-  }
+  
 }
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  
+    
+    
     marginTop: 20,
     backgroundColor: 'white',
     width:360,   
