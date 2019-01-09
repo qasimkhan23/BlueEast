@@ -60,7 +60,7 @@ const Card = (props:CardProps)=>{
       <View>
       
         <View style ={styles.card_amount}>
-            <View style ={{backgroundColor:'#4286f4',width:150,height:160,marginTop:10,padding:20}}>
+            <View style ={{backgroundColor:'#4286f4',width:150,height:160,padding:20}}>
             <Text>{props.title}</Text>
             <Text style={{fontSize:20}}> {props.amount}
             </Text>
