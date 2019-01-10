@@ -32,7 +32,7 @@ class Header extends Component<HeaderProps, {}> {
        }}>
       
 
-  {this.props.page === 'home' || this.props.page === 'list'  ?  <MyButton/> : <ArrowLeft history = {this.props.history} />}
+  {this.props.page === 'home'  ?  <MyButton/> : <ArrowLeft history = {this.props.history} />}
 
 
       

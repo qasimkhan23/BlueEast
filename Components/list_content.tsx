@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View,StyleSheet, Text,ScrollView,ActivityIndicator, } from 'react-native';
-import GET_USERS from './query';
+import {GET_BILLS} from './query';
 import { Query } from 'react-apollo';
 
 
@@ -25,7 +25,7 @@ export const List_Content = () => {
     return (
       
         
-        <Query query={GET_USERS}>
+        <Query query={GET_BILLS}>
         {({ data, loading, error }) => {
             
             if(loading) return <Loader/>

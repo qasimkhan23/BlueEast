@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
 import { View,StyleSheet, Text,Image,TextInput,Picker,Button,ScrollView } from 'react-native';
-
+import {withRouter} from 'react-router';
+import { Formik } from "formik";
+import * as Yup from "yup";
+import {ADD_BILL} from '../Components/query';
+import { withInputTypeProps } from "react-native-formik";
+import Form from '../Components/form';
 import Icon from 'react-native-vector-icons/FontAwesome';
 interface State {
   site:string,
@@ -19,7 +24,20 @@ export interface PickerProps {
   monthValue:string
 }
 
-export default class Create_Content extends Component<{},State> {
+const validationSchema = Yup.object().shape({
+  name: Yup.string()
+    .required(),
+
+  rate: Yup.string()
+    .required(),
+
+  budget: Yup.string()
+    .required(),
+    
+  
+});
+
+class Create_Content extends Component<{},State> {
     constructor(props){
         super(props);
          this.array=[];
@@ -47,6 +65,7 @@ export default class Create_Content extends Component<{},State> {
 
         tempArr.push({id:this.state.count++,month:'',rate:'',budget:''});
         
+        validationSchema();
         
         this.setState({
          List: tempArr,
@@ -86,10 +105,11 @@ export default class Create_Content extends Component<{},State> {
     //   console.log('update month function unit',month)
     //     this.setState({ month: month })
     //  }
-     updateUnitRate = (id,text) => {
+     updateUnitRate = (id,text,setFieldValue) => {
 
       console.log('event',text)
        
+      setFieldValue("rate",text);
        
        let tempArr = this.state.List;
        tempArr.map((item)=>(
@@ -98,9 +118,10 @@ export default class Create_Content extends Component<{},State> {
        ));
       this.setState({ List: tempArr })
    }
-   updateBudget = (id,text) => {
+   updateBudget = (id,text,setFieldValue) => {
 
     console.log('event',text)
+    setFieldValue("budget",text);
      
      
      let tempArr = this.state.List;
@@ -133,23 +154,45 @@ export default class Create_Content extends Component<{},State> {
         padding: 20,
     
       }}>
-        
+         <Formik onSubmit={()=>this.props.history.push("/list")}
+            validationSchema={validationSchema}>
+            {props => {
+              return (
         <ScrollView>
         
   
   <Text style={styles.Label_Name}>Bill Name</Text>
-  <View style={{flexDirection:'row'}}>
+  
 
-  <Icon size={30} name="building" backgroundColor="#4286f4" style ={styles.icon}/>
-    <TextInput
+    {/* <TextInput
           style={{height: 60,borderBottomWidth: 1,
             borderBottomColor: 'gray'}}
           placeholder="eg: Bedroom AC Bill"
           style={{marginLeft:20}}
           
-        />
+        /> */}
+       
+              
+                <View style={{flexDirection:'row' }}>
+
+           <Icon size={30} name="building" backgroundColor="#4286f4" style ={styles.icon}/>
+                  <TextInput style={{height: 60,borderBottomWidth: 1,marginLeft:20,
+            borderBottomColor: 'gray'}}
+            placeholder="eg: Bedroom AC Bill" 
+                  onChangeText={text => props.setFieldValue("name", text)}/>
+                   </View>
+                   <View>
+                <Text style={{color:'red',fontSize:15,marginLeft:48}}>{props.errors.name}</Text>
+
+                <Text style={{color:'red',fontSize:15,marginLeft:48}}>{props.errors.rate}</Text>
+
+                <Text style={{color:'red',fontSize:15,marginLeft:48}}>{props.errors.budget}</Text>
+                  
+                </View>
+            
+        {/* <Form/> */}
         
-        </View>
+      
 
   <Text style={styles.Label_Site}>Select Site</Text>
         <View style ={{flexDirection:'row'}}>
@@ -157,7 +200,7 @@ export default class Create_Content extends Component<{},State> {
         
         
         <Icon size={30} name="question" backgroundColor="#4286f4" style ={styles.icon}/>
-        <Picker selectedValue =  {this.state.site} style ={{width: 260,marginLeft:20}} onValueChange = {this.updateSite}>
+        <Picker selectedValue =  {this.state.site} style ={{width: 260,marginLeft:22}} onValueChange = {this.updateSite}>
                 <Picker.Item label = "My Home" value = "My Home" />
                <Picker.Item label = "Website" value = "Website" />
                <Picker.Item label = "BlueEast" value = "BlueEast" />
@@ -197,9 +240,9 @@ export default class Create_Content extends Component<{},State> {
              
               
               deleteRow={()=> this.deleteRow(item.id)}
-               updateUnitRate = {(text)=>this.updateUnitRate(item.id,text)}
+               updateUnitRate = {(text)=>this.updateUnitRate(item.id,text,props.setFieldValue)}
                unitRateValue = {this.state.List[index].rate}
-               updateBudget = {(text)=>this.updateBudget(item.id,text)}
+               updateBudget = {(text)=>this.updateBudget(item.id,text,props.setFieldValue)}
                budgetValue = {this.state.List[index].budget}
 
                updateMonth = {(itemValue)=>this.updateMonth(item.id,itemValue)}
@@ -225,17 +268,21 @@ export default class Create_Content extends Component<{},State> {
         />
 
        
-       <View style={{flexDirection:'row',justifyContent:'flex-end',marginTop:30,marginBottom:30}}><Button title = "Next"/></View>
+       <View style={{flexDirection:'row',justifyContent:'flex-end',marginTop:30,marginBottom:30}}>
+       <Button title = "Next" onPress={props.handleSubmit}/></View>
        
 
 
  </ScrollView>
-        
+          );
+        }}
+    </Formik>
       </View>
      
     );
   }
 }
+export default withRouter(Create_Content);
 const PickerRow = (props:PickerProps) =>{
     return(
         <View style={{flexDirection:'row', justifyContent:'space-evenly', marginTop:20}}>
