@@ -65,7 +65,6 @@ class Create_Content extends Component<{},State> {
 
         tempArr.push({id:this.state.count++,month:'',rate:'',budget:''});
         
-        validationSchema();
         
         this.setState({
          List: tempArr,
@@ -182,6 +181,13 @@ class Create_Content extends Component<{},State> {
                   onChangeText={text => props.setFieldValue("name", text)}/>
                    </View>
                    <View>
+
+
+                     
+
+
+
+
                 <Text style={{color:'red',fontSize:15,marginLeft:48}}>{props.errors.name}</Text>
 
                 <Text style={{color:'red',fontSize:15,marginLeft:48}}>{props.errors.rate}</Text>
